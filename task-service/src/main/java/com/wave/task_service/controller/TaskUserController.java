@@ -4,9 +4,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.wave.task_service.Component.GetClaims;
 import com.wave.task_service.Component.ValidateToken;
 import com.wave.task_service.dto.TaskDto;
+import com.wave.task_service.dto.TaskIdDto;
 import com.wave.task_service.dto.UserDto;
 import com.wave.task_service.service.TaskService;
 
@@ -15,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
 
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,13 +60,14 @@ public class TaskUserController
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<?> deleteTask(@RequestHeader(name = "Authorization") String token, @RequestBody String id) throws IOException
+    public ResponseEntity<?> deleteTask(@RequestHeader(name = "Authorization") String token, @RequestBody TaskIdDto id) throws IOException
     {
         if(!(new ValidateToken().validate(token.replaceFirst("Bearer ", ""))))
         {
             return null;
         }
-        taskService.deleteTask(id);
+        
+        taskService.deleteTask(id.getId());
 
         return ResponseEntity.ok().build();
     }

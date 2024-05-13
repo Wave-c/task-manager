@@ -15,8 +15,4 @@ import jakarta.transaction.Transactional;
 public interface TaskRepository extends JpaRepository<Task, String>
 {
     Iterable<Task> findByUsername(String username);
-
-    @Modifying
-    @Query("delete from Task a WHERE a.id = :id")
-    void delete(@Param("id") String id);
 }

@@ -1,6 +1,7 @@
 package com.wave.task_service.service;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.UUID;
 import java.sql.Connection;
 import java.time.LocalDateTime;
@@ -56,7 +57,7 @@ public class TaskService
     @Transactional
     public void deleteTask(String id)
     {
-        taskRepository.delete(id);
+        taskRepository.deleteById(id);
         taskRepository.flush();
     }
 }

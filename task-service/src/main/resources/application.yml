@@ -5,7 +5,7 @@ spring:
     application:
         name: task-service
     datasource:
-        url: jdbc:postgresql://${POSTGRES_USER_HOST:localhost}:5432/task-manager-db
+        url: jdbc:postgresql://${POSTGRES_USER_HOST:localhost}:5432/task-db
         username: WAVE
         password: den1234567890/
     jpa:
