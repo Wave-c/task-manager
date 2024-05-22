@@ -41,7 +41,7 @@ public class TaskService
         return tasksDto;
     }
 
-    public void add(TaskDto taskDto)
+    public void addTask(TaskDto taskDto)
     {
         Task task = new Task()
             .setId(UUID.randomUUID().toString())
@@ -59,5 +59,13 @@ public class TaskService
     {
         taskRepository.deleteById(id);
         taskRepository.flush();
+    }
+
+    public void editTask(TaskDto taskDto)
+    {
+        Task task = taskRepository.findById(taskDto.getId()).get();
+        deleteTask(task.getId());
+        task.setTitle(taskDto.getTitle()).setDescription(taskDto.getDescription()).setDeadline(taskDto.getDeadline());
+        taskRepository.save(task);
     }
 }

@@ -54,7 +54,7 @@ public class TaskUserController
         {
             return null;
         }
-        taskService.add(taskDto);
+        taskService.addTask(taskDto);
         
         return ResponseEntity.ok().build();
     }
@@ -69,6 +69,18 @@ public class TaskUserController
         
         taskService.deleteTask(id.getId());
 
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/edit")
+    public ResponseEntity<?> editTask(@RequestHeader(name = "Authorization") String token, @RequestBody TaskDto task) throws IOException 
+    {
+        if(!(new ValidateToken().validate(token.replaceFirst("Bearer ", ""))))
+        {
+            return null;
+        }
+        taskService.editTask(task);
+        
         return ResponseEntity.ok().build();
     }
 }
